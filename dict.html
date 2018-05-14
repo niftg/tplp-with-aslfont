@@ -1,5 +1,46 @@
 <!document html>
-<!--for(i of Array.from(document.querySelectorAll("table.dict"))){console.log(i.outerHTML)}-->
+<style>
+@font-face {
+    font-family: aslfont;
+    src: url(https://aslfont.github.io/Symbol-Font-For-ASL/symbol_font_for_asl/symbol_font_for_asl.ttf);
+}
+.aslfont, #repl>dl>di>dd{font-family: aslfont; font-size: x-large;}
+dt{font-family:monospace;}
+</style>
+<script>
+window.addEventListener("load",init,false);
+function init() {
+  document.querySelector("#replace").addEventListener("click",replace,false)
+}
+function replace() {
+  const replItems = Array.from(document.querySelectorAll("#repl>dl>di"));
+  const replDe = Array.from(document.querySelectorAll(".de"));
+
+  for (i of replItems) {
+    var dt = i.querySelector("dt").textContent;
+    var replCode = '<span class="aslfont">' + i.querySelector("dd").textContent + '</span>';
+    for (j of replDe) {
+      j.innerHTML = j.innerHTML.replace(dt,replCode);
+    }
+  }
+;}
+</script>
+
+<form id="repl">
+<dl>
+  <di><dt>flat hand</dt><dd>B</dd></di>
+  <di><dt>thumb-fist</dt><dd>A</dd></di>
+  <di><dt>bent hand</dt><dd>M</dd></di>
+  <di><dt>wiggling hand</dt><dd>5??</dd></di>
+  <di><dt>1 hand</dt><dd>1</dd></di>
+  <di><dt>2 hand</dt><dd>2</dd></di>
+  <di><dt>O hand</dt><dd>o</dd></di>
+  <di><dt>L hand</dt><dd>l</dd></di>
+  <di><dt>F hand</dt><dd>f</dd></di>
+</dl>
+<input type="button" id="replace" value="replace"/>
+</form>
+
 <table class="dict">
   <tbody><tr>
     <td class="dt">a <dr>or</dr> kin</td>

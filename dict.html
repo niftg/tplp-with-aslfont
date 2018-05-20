@@ -4,8 +4,9 @@
     font-family: aslfont;
     src: url(https://aslfont.github.io/Symbol-Font-For-ASL/symbol_font_for_asl/symbol_font_for_asl.ttf);
 }
-.aslfont, #repl>dl>di>dd{font-family: aslfont; font-size: x-large;}
+.aslfont, #repl>dl>di>dd, .priority>dl>di>dd{font-family: aslfont; font-size: x-large;}
 dt{font-family:monospace;}
+.priority {background-color:lightgray;}
 </style>
 <script>
 window.addEventListener("load",init,false);
@@ -14,9 +15,21 @@ function init() {
 }
 function replace() {
   var replItems = Array.from(document.querySelectorAll("#repl>dl>di"));
+  var replItemsPr = Array.from(document.querySelectorAll(".priority>dl>di"));
   var replDe = Array.from(document.querySelectorAll(".de"));
   for (h of replDe) {h.title = '['+h.textContent+']';}
 
+  for (g of replItemsPr) { //priority
+    if(g.parentElement.id=="fo"){
+      var dt = g.querySelector("dt").textContent;
+      var replCode = '<span class="aslfont po">' + g.querySelector("dd").textContent + '</span>';
+      for (j of replDe) {
+        if(dt.match("palm")||!j.textContent.match("palm")){
+          j.innerHTML = j.innerHTML.replace(dt,replCode);
+        }
+      }
+    }
+  }
   for (i of replItems) {
     var dt = i.querySelector("dt").textContent;
     var replCode = '<span class="aslfont ' + i.parentElement.id  + '">' + i.querySelector("dd").textContent + '</span>';
@@ -67,14 +80,15 @@ function sort() {
   <di><dt>palm facing forward</dt><dd>"=..`</dd></di>
   <di><dt>palm facing back</dt><dd>"=``.</dd></di>
 </dl>
-<dl id="fo">
-  <di><dt>thumb pointing left</dt><dd>[[."|.~|`"]]</dd></di>
-  <di><dt>thumb pointing back</dt><dd>[[.'|-.|'`]]</dd></di>
-  <di><dt>index finger pointing left</dt><dd>[[-.|=`|-`]]</dd></di>
-  <di><dt>thumb pointing up</dt><dd>[[`%|=`|%`]]</dd></di>
-  <di><dt>index finger pointing up</dt><dd>[[.'|".|'.]]</dd></di>
-  <di><dt>index finger pointing forward</dt><dd>[[.~|`%|~`]]</dd></di>
-</dl>
+<div class="priority"><dl id="fo">
+  <di><dt>palm facing down, thumb pointing left</dt><dd>.~</dd></di>
+  <di><dt>palm facing down, thumb pointing back</dt><dd>-.</dd></di>
+  <di><dt>palm facing left, thumb pointing up</dt><dd>`%</dd></di>
+  <di><dt>palm facing left, index finger pointing up</dt><dd>.'</dd></di>
+  <di><dt>palm facing forward, index finger pointing up</dt><dd>."</dd></di>
+  <di><dt>index finger pointing left</dt><dd>[-.,=`,-`]</dd><!-- experimental and ad hoc notation just for TPL --></di>
+  <di><dt>index finger pointing forward</dt><dd>[.~,`%,~`]</dd><!-- experimental and ad hoc notation just for TPL --></di>
+</dl></div>
 <dl id="bh"><di><dt>(both hands)</dt><dd>}{</dd></di></dl>
 
 <input type="button" id="replace" value="replace"/>

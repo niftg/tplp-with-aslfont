@@ -11,7 +11,7 @@ dt{font-family:monospace;}
 <script>
 window.addEventListener("load",init,false);
 function init() {
-  document.querySelector("#replace").addEventListener("click",function(){replace();sort();},false)
+  document.querySelector("#replace").addEventListener("click",function(){add();replace();sort();},false)
 }
 function replace() {
   var replItems = Array.from(document.querySelectorAll("#repl>dl>di"));
@@ -49,6 +49,13 @@ function sort() {
     j.appendChild(newElm);
   }
 }
+function add() {
+  var replDe = Array.from(document.querySelectorAll(".spell .de"));
+
+  for (j of replDe) {
+    j.textContent = j.textContent.replace(", palm", "under left slanted forearm, palm");
+  }
+}
 </script>
 
 <form id="repl">
@@ -62,6 +69,7 @@ function sort() {
   <di><dt>O hand</dt><dd>o</dd></di>
   <di><dt>L hand</dt><dd>l</dd></di>
   <di><dt>F hand</dt><dd>f</dd></di>
+  <di><dt>nothing</dt><dd><!-- [] --></dd><!-- experimental and ad hoc notation just for TPL --></di>
 </dl>
 <dl id="hl">
   <di><dt>in front of chest</dt><dd>{|`}</dd></di>
@@ -71,7 +79,7 @@ function sort() {
   <di><dt>at left elbow</dt><dd>{.||}</dd></di>
   <di><dt>on top of left fist</dt><dd>{s^}*</dd></di>
   <di><dt>on stomach</dt><dd>{|.|}</dd></di>
-  <!--di><dt>under left slanted forearm</dt><dd>f</dd></di-->
+  <di><dt>under left slanted forearm</dt><dd>{B_}.- </dd><!-- not precise --></di>
 </dl>
 <dl id="po"><!-- experimental and ad hoc notation just for TPL -->
   <di><dt>palm facing left</dt><dd>'%</dd></di>
@@ -456,7 +464,7 @@ function sort() {
   <tr>
     <td class="dt">wile</td>
     <td class="de">O hand on stomach, palm facing up</td></tr></tbody></table>
-<table class="dict">
+<table class="dict spell">
   <tbody><tr>
     <td class="dt">a</td>
     <td class="de">thumb-fist, palm facing back</td></tr>

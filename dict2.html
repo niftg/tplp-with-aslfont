@@ -4,12 +4,16 @@
     font-family: aslfont;
     src: url(https://aslfont.github.io/Symbol-Font-For-ASL/symbol_font_for_asl/symbol_font_for_asl.ttf);
 }
-.aslfont, #repl>dl>di>dd{font-family: aslfont; font-size: x-large;}
-dt{font-family:monospace;}
+@font-face {
+    font-family: sitelenpona;
+    src: url(https://niftg.github.io/linja-pona/linja%20pona%203%20OTF.otf);
+}
+.aslfont, #repl>dl>di>dd{font-family: aslfont; font-size: 5em;}
+.dt{font-family: sitelenpona; font-variant-ligatures: common-ligatures; font-feature-settings: "liga", "clig"; font-size: 3em;}
 </style>
 <table class="dict">
   <tbody><tr>
-    <td class="dt">a <dr>or</dr> kin</td>
+    <td class="dt">a &#8203;</td>
     <td class="de" title="[flat hand at side of chin, palm facing left]"><p><span class="aslfont hl">(..)</span><span class="aslfont po">'%</span><span class="aslfont hs">B</span></p></td>
 </tr>
   <tr>
@@ -37,7 +41,7 @@ dt{font-family:monospace;}
     <td class="dt">awen</td>
     <td class="de" title="[L hand at left shoulder, palm facing back]"><p><span class="aslfont hl">{`||}</span><span class="aslfont po">"=``.</span><span class="aslfont hs">l</span></p></td></tr>
   <tr>
-    <td class="dt">e</td>
+    <td class="dt">e &#8203;</td>
     <td class="de" title="[flat hand in front of chest, palm facing down]"><p><span class="aslfont hl">{|`}</span><span class="aslfont po">~-..</span><span class="aslfont hs">B</span></p></td></tr>
   <tr>
     <td class="dt">en</td>
@@ -148,7 +152,7 @@ dt{font-family:monospace;}
     <td class="dt">luka</td>
     <td class="de" title="[flat hand in front of chest, palm facing forward]"><p><span class="aslfont hl">{|`}</span><span class="aslfont po">"=..`</span><span class="aslfont hs">B</span></p></td></tr>
   <tr>
-    <td class="dt">lukin <dr>or</dr> oko</td>
+    <td class="dt">lukin</td>
     <td class="de" title="[2 hand in front of chest, palm facing down]"><p><span class="aslfont hl">{|`}</span><span class="aslfont po">~-..</span><span class="aslfont hs">2</span></p></td></tr>
   <tr>
     <td class="dt">lupa</td>
@@ -214,7 +218,7 @@ dt{font-family:monospace;}
     <td class="dt">noka</td>
     <td class="de" title="[flat hand in front of chest, palm facing back]"><p><span class="aslfont hl">{|`}</span><span class="aslfont po">"=``.</span><span class="aslfont hs">B</span></p></td></tr>
   <tr>
-    <td class="dt">o</td>
+    <td class="dt">o &#8203;</td>
     <td class="de" title="[wiggling hand in front of chest, palm facing down]"><p><span class="aslfont hl">{|`}</span><span class="aslfont po">~-..</span><span class="aslfont hs">5??</span></p></td></tr>
   <tr>
     <td class="dt">olin</td>
@@ -289,7 +293,7 @@ dt{font-family:monospace;}
     <td class="dt">sike</td>
     <td class="de" title="[O hand on top of left fist, palm facing down]"><p><span class="aslfont hl">{s^}*</span><span class="aslfont po">~-..</span><span class="aslfont hs">o</span></p></td></tr>
   <tr>
-    <td class="dt">sin <dr>or</dr> namako</td>
+    <td class="dt">sin</td>
     <td class="de" title="[wiggling hand on top of left fist, palm facing left]"><p><span class="aslfont hl">{s^}*</span><span class="aslfont po">'%</span><span class="aslfont hs">5??</span></p></td></tr>
   <tr>
     <td class="dt">sina</td>
@@ -371,38 +375,38 @@ dt{font-family:monospace;}
     <td class="de" title="[O hand on stomach, palm facing up]"><p><span class="aslfont hl">{|.|}</span><span class="aslfont po">~-``</span><span class="aslfont hs">o</span></p></td></tr></tbody></table>
 <table class="dict spell">
   <tbody><tr>
-    <td class="dt">a</td>
+    <td class="dt">[_ale][_awen]</td>
     <td class="de" title="[thumb-fistunder left slanted forearm, palm facing back]"><p><span class="aslfont hl">{B_}.- </span><span class="aslfont po">"=``.</span><span class="aslfont hs">A</span></p></td></tr>
   <tr>
-    <td class="dt">e</td>
+    <td class="dt">[_en][_esun]</td>
     <td class="de" title="[flat handunder left slanted forearm, palm facing back]"><p><span class="aslfont hl">{B_}.- </span><span class="aslfont po">"=``.</span><span class="aslfont hs">B</span></p></td></tr>
   <tr>
-    <td class="dt">i <dr>and</dr> j</td>
+    <td class="dt">[_ike][_jo]</td>
     <td class="de" title="[1 handunder left slanted forearm, palm facing down]"><p><span class="aslfont hl">{B_}.- </span><span class="aslfont po">~-..</span><span class="aslfont hs">1</span></p></td></tr>
   <tr>
-    <td class="dt">k</td>
+    <td class="dt">[_kasi][_kili]</td>
     <td class="de" title="[bent handunder left slanted forearm, palm facing down]"><p><span class="aslfont hl">{B_}.- </span><span class="aslfont po">~-..</span><span class="aslfont hs">M</span></p></td></tr>
   <tr>
-    <td class="dt">l</td>
+    <td class="dt">[_luka][_len]</td>
     <td class="de" title="[L handunder left slanted forearm, palm facing back]"><p><span class="aslfont hl">{B_}.- </span><span class="aslfont po">"=``.</span><span class="aslfont hs">l</span></p></td></tr>
   <tr>
-    <td class="dt">m</td>
+    <td class="dt">[_meli][_mu]</td>
     <td class="de" title="[wiggling handunder left slanted forearm, palm facing back]"><p><span class="aslfont hl">{B_}.- </span><span class="aslfont po">"=``.</span><span class="aslfont hs">5??</span></p></td></tr>
   <tr>
-    <td class="dt">n</td>
+    <td class="dt">[_nena][_nasa]</td>
     <td class="de" title="[wiggling handunder left slanted forearm, palm facing down]"><p><span class="aslfont hl">{B_}.- </span><span class="aslfont po">~-..</span><span class="aslfont hs">5??</span></p></td></tr>
   <tr>
-    <td class="dt">o</td>
+    <td class="dt">[_ona][_olin]</td>
     <td class="de" title="[O handunder left slanted forearm, palm facing down]"><p><span class="aslfont hl">{B_}.- </span><span class="aslfont po">~-..</span><span class="aslfont hs">o</span></p></td></tr>
   <tr>
-    <td class="dt">p</td>
+    <td class="dt">[_pona][_pakala]</td>
     <td class="de" title="[F handunder left slanted forearm, palm facing down]"><p><span class="aslfont hl">{B_}.- </span><span class="aslfont po">~-..</span><span class="aslfont hs">f</span></p></td></tr>
   <tr>
-    <td class="dt">s</td>
+    <td class="dt">[_sama][_suwi]</td>
     <td class="de" title="[thumb-fistunder left slanted forearm, palm facing down]"><p><span class="aslfont hl">{B_}.- </span><span class="aslfont po">~-..</span><span class="aslfont hs">A</span></p></td></tr>
   <tr>
-    <td class="dt">t</td>
+    <td class="dt">[_tomo][_toki]</td>
     <td class="de" title="[flat handunder left slanted forearm, palm facing down]"><p><span class="aslfont hl">{B_}.- </span><span class="aslfont po">~-..</span><span class="aslfont hs">B</span></p></td></tr>
   <tr>
-    <td class="dt">u <dr>and</dr> w</td>
+    <td class="dt">[_unpa][_wile]</td>
     <td class="de" title="[2 handunder left slanted forearm, palm facing back]"><p><span class="aslfont hl">{B_}.- </span><span class="aslfont po">"=``.</span><span class="aslfont hs">2</span></p></td></tr></tbody></table>

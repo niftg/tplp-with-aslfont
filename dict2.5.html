@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<style>
+@font-face {
+    font-family: aslfont;
+    src: url(https://aslfont.github.io/Symbol-Font-For-ASL/symbol_font_for_asl/symbol_font_for_asl.ttf);
+}
+@font-face {
+    font-family: sitelenpona;
+    src: url(https://niftg.github.io/linja-pona/linja%20pona%203%20OTF.otf);
+}
+.aslfont, #filter>*>* {font-family: aslfont; font-size: 3em;}
+#filter {background-color: lightgray;}
+#filter div p {padding:0em; margin:0em;}
+.dt{
+  font-family: sitelenpona; font-variant-ligatures: common-ligatures; font-feature-settings: "liga", "clig";
+  font-size: 2em; line-height: 1.25em;
+}
+
+dl.dict {display: flex; flex-flow: column wrap; align-items: space-around;}
+dl.dict di {
+  display: flex; flex-flow: row nowrap; align-items: baseline; justify-content: flex-start;
+  /*padding: 0.25em 0em 0.25em; margin: 0em 0em 0em;*/
+}
+
+dl.dict dt, dl.dict dd {padding: 0em 0em 0em; margin: 0em 0em 0em;}
+dl.dict dt {/*width: 20%;*/ height: 2em; flex-basis: 1.75em;}
+dl.dict.spell dt {/*width:40%; padding-right:0.5em;*/flex-grow:0.5;flex-shrink:0.5;}
+dl.dict dd {width: 70%; height: 2em;}
+dl.dict.spell dd {height: 3em;}
+.bh, .hl, .po, .hs {display:inline-flex; flex-flow: row nowrap;}
+</style>
+<script>
+window.addEventListener("load",init,false);
+function init() {
+  document.querySelector("#picker").addEventListener("click",toggle,false);
+  document.querySelector("#opt").style.display = "none";
+  
+  var cbx = document.querySelectorAll('#filter input[type="checkbox"]');
+  for (var i of cbx) {
+    i.addEventListener("click",filter,false)
+  }
+}
+function toggle(){
+  var o = document.querySelector("#opt");
+  if(o.style.display=="none"){o.style.display="block";}else{o.style.display="none";}
+}
+function filter(){
+  var dis = document.querySelectorAll("dl.dict di");
+  var cbx = document.querySelectorAll('#filter input[type="checkbox"]');
+  var kws = [];
+  var nms = [];
+  for (var j of cbx){
+    if(j.checked){
+      kws.push([j.name,document.querySelector('label[for='+j.id+']').textContent]);
+      if(nms.indexOf(j.name)<0){nms.push(j.name);}
+    }
+  }
+  for (var i of dis){
+    var nms_tester = new Array(nms.length);
+    i.style.display = "none";
+    var dd = i.querySelector("dd");
+    for (var j of kws){
+      var span = dd.querySelector("span."+j[0]);
+      var regexpkw = new RegExp(escapeRegExp(j[1]));
+      if(span){if(spmatch(j,span.textContent)||span.textContent.match(regexpkw)){
+        nms_tester[nms.indexOf(j[0])] = true;
+        console.log(j);
+      }}
+    }
+    var matched = true;
+    for (var k of nms_tester){
+      matched = matched && k;
+    }
+    if(matched){i.style.display = "flex";}
+  }
+}
+function spmatch(kwpair,t){
+  if(kwpair[0]=="hs"&&kwpair[1]==" "){
+    return t.match(/^$/);
+  }else if(kwpair[0]=="po"&&kwpair[1]=='[({."})]'){
+    return !(t.match(/\'%/) || t.match(/[\.`]{2}/));
+  }else{return false;}
+}
+function escapeRegExp(string) {
+  return string.replace(/[.*+?^=!:${}()|[\]\/\\]/g, '\\$&'); // $&はマッチした部分文字列全体を意味します
+}
+</script>
+<p><input type="button" id="picker" value="GZF" class="aslfont"/></p>
+<form id="filter">
+  <div id="opt"><p>
+    <input type="checkbox" name="hs" id="hsB"/><label for="hsB">B</label>
+    <input type="checkbox" name="hs" id="hsa"/><label for="hsa">A</label>
+    <input type="checkbox" name="hs" id="hsM"/><label for="hsM">M</label>
+    <input type="checkbox" name="hs" id="hs5"/><label for="hs5">5??</label>
+    <input type="checkbox" name="hs" id="hs1"/><label for="hs1">1</label>
+    <input type="checkbox" name="hs" id="hs2"/><label for="hs2">2</label>
+    <input type="checkbox" name="hs" id="hso"/><label for="hso">o</label>
+    <input type="checkbox" name="hs" id="hsl"/><label for="hsl">l</label>
+    <input type="checkbox" name="hs" id="hsf"/><label for="hsf">f</label>
+    <input type="checkbox" name="hs" id="hs_"/><label for="hs_"> </label>
+  </p>
+  <p>
+    <input type="checkbox" name="hl" id="hlct"/><label for="hlct">{|`}</label>
+    <input type="checkbox" name="hl" id="hlfh"/><label for="hlfh">(``)</label>
+    <input type="checkbox" name="hl" id="hlcn"/><label for="hlcn">(..)</label>
+    <input type="checkbox" name="hl" id="hlsh"/><label for="hlsh">{`||}</label>
+    <input type="checkbox" name="hl" id="hlel"/><label for="hlel">{.||}</label>
+    <input type="checkbox" name="hl" id="hlft"/><label for="hlft">{s^}*</label>
+    <input type="checkbox" name="hl" id="hlst"/><label for="hlst">{|.|}</label>
+    <input type="checkbox" name="hl" id="hlsa"/><label for="hlsa">{B_}.- </label>
+  </p>
+  <p>
+    <input type="checkbox" name="po" id="pol"/><label for="pol">'%</label>
+    <input type="checkbox" name="po" id="pou"/><label for="pou">~-``</label>
+    <input type="checkbox" name="po" id="pod"/><label for="pod">~-..</label>
+    <input type="checkbox" name="po" id="pof"/><label for="pof">"=..`</label>
+    <input type="checkbox" name="po" id="pob"/><label for="pob">"=``.</label>
+    <input type="checkbox" name="po" id="po_"/><label for="po_">[({."})]</label>
+  </p>
+  <p><input type="checkbox" name="bh" id="bh1"/><label for="bh1">}{</label></p></div>
+</form>
+<dl class="dict">
+  <di>
+    <dt class="dt">a &#8203;</dt>
+    <dd class="de" title="[flat hand at side of chin, palm facing left]"><p><span class="aslfont hl">(..)</span><span class="aslfont po">'%</span><span class="aslfont hs">B</span></p></dd></di>
+  <di>
+    <dt class="dt">akesi</dt>
+    <dd class="de" title="[2 hand at left elbow, palm facing back]"><p><span class="aslfont hl">{.||}</span><span class="aslfont po">"=``.</span><span class="aslfont hs">2</span></p></dd></di>
+  <di>
+    <dt class="dt">ala</dt>
+    <dd class="de" title="[flat hand at left shoulder, palm facing down]"><p><span class="aslfont hl">{`||}</span><span class="aslfont po">~-..</span><span class="aslfont hs">B</span></p></dd></di>
+  <di>
+    <dt class="dt">alasa</dt>
+    <dd class="de" title="[1 hand at left shoulder, palm facing back]"><p><span class="aslfont hl">{`||}</span><span class="aslfont po">"=``.</span><span class="aslfont hs">1</span></p></dd></di>
+  <di>
+    <dt class="dt">ale</dt>
+    <dd class="de" title="[wiggling hand in front of chest, palm facing forward (both hands)]"><p><span class="aslfont bh">}{</span><span class="aslfont hl">{|`}</span><span class="aslfont po">"=..`</span><span class="aslfont hs">5??</span></p></dd></di>
+  <di>
+    <dt class="dt">anpa</dt>
+    <dd class="de" title="[bent hand in front of chest, palm facing down]"><p><span class="aslfont hl">{|`}</span><span class="aslfont po">~-..</span><span class="aslfont hs">M</span></p></dd></di>
+  <di>
+    <dt class="dt">ante</dt>
+    <dd class="de" title="[bent hand on top of left fist, palm facing left]"><p><span class="aslfont hl">{s^}*</span><span class="aslfont po">'%</span><span class="aslfont hs">M</span></p></dd></di>
+  <di>
+    <dt class="dt">anu</dt>
+    <dd class="de" title="[L hand in front of chest, palm facing down]"><p><span class="aslfont hl">{|`}</span><span class="aslfont po">~-..</span><span class="aslfont hs">l</span></p></dd></di>
+  <di>
+    <dt class="dt">awen</dt>
+    <dd class="de" title="[L hand at left shoulder, palm facing back]"><p><span class="aslfont hl">{`||}</span><span class="aslfont po">"=``.</span><span class="aslfont hs">l</span></p></dd></di>
+  <di>
+    <dt class="dt">e &#8203;</dt>
+    <dd class="de" title="[flat hand in front of chest, palm facing down]"><p><span class="aslfont hl">{|`}</span><span class="aslfont po">~-..</span><span class="aslfont hs">B</span></p></dd></di>
+  <di>
+    <dt class="dt">en</dt>
+    <dd class="de" title="[L hand on top of left fist, palm facing down]"><p><span class="aslfont hl">{s^}*</span><span class="aslfont po">~-..</span><span class="aslfont hs">l</span></p></dd></di>
+  <di>
+    <dt class="dt">esun</dt>
+    <dd class="de" title="[bent hand in front of chest, palm facing up (both hands)]"><p><span class="aslfont bh">}{</span><span class="aslfont hl">{|`}</span><span class="aslfont po">~-``</span><span class="aslfont hs">M</span></p></dd></di>
+  <di>
+    <dt class="dt">ijo</dt>
+    <dd class="de" title="[thumb-fist in front of chest, palm facing down, thumb pointing left]"><p><span class="aslfont hl">{|`}</span><span class="aslfont po">.~</span><span class="aslfont hs">A</span></p></dd></di>
+  <di>
+    <dt class="dt">ike</dt>
+    <dd class="de" title="[thumb-fist in front of chest, palm facing forward]"><p><span class="aslfont hl">{|`}</span><span class="aslfont po">"=..`</span><span class="aslfont hs">A</span></p></dd></di>
+  <di>
+    <dt class="dt">ilo</dt>
+    <dd class="de" title="[thumb-fist on top of left fist, palm facing up]"><p><span class="aslfont hl">{s^}*</span><span class="aslfont po">~-``</span><span class="aslfont hs">A</span></p></dd></di>
+  <di>
+    <dt class="dt">insa</dt>
+    <dd class="de" title="[L hand on stomach, palm facing back]"><p><span class="aslfont hl">{|.|}</span><span class="aslfont po">"=``.</span><span class="aslfont hs">l</span></p></dd></di>
+  <di>
+    <dt class="dt">jaki</dt>
+    <dd class="de" title="[thumb-fist at side of chin, palm facing forward]"><p><span class="aslfont hl">(..)</span><span class="aslfont po">"=..`</span><span class="aslfont hs">A</span></p></dd></di>
+  <di>
+    <dt class="dt">jan</dt>
+    <dd class="de" title="[2 hand at left shoulder, palm facing back]"><p><span class="aslfont hl">{`||}</span><span class="aslfont po">"=``.</span><span class="aslfont hs">2</span></p></dd></di>
+  <di>
+    <dt class="dt">jelo</dt>
+    <dd class="de" title="[F hand on stomach, palm facing down]"><p><span class="aslfont hl">{|.|}</span><span class="aslfont po">~-..</span><span class="aslfont hs">f</span></p></dd></di>
+  <di>
+    <dt class="dt">jo</dt>
+    <dd class="de" title="[bent hand on top of left fist, palm facing up]"><p><span class="aslfont hl">{s^}*</span><span class="aslfont po">~-``</span><span class="aslfont hs">M</span></p></dd></di>
+  <di>
+    <dt class="dt">kala</dt>
+    <dd class="de" title="[flat hand at left elbow, palm facing back]"><p><span class="aslfont hl">{.||}</span><span class="aslfont po">"=``.</span><span class="aslfont hs">B</span></p></dd></di>
+  <di>
+    <dt class="dt">kalama</dt>
+    <dd class="de" title="[wiggling hand at side of chin, palm facing left]"><p><span class="aslfont hl">(..)</span><span class="aslfont po">'%</span><span class="aslfont hs">5??</span></p></dd></di>
+  <di>
+    <dt class="dt">kama</dt>
+    <dd class="de" title="[bent hand in front of chest, palm facing back]"><p><span class="aslfont hl">{|`}</span><span class="aslfont po">"=``.</span><span class="aslfont hs">M</span></p></dd></di>
+  <di>
+    <dt class="dt">kasi</dt>
+    <dd class="de" title="[F hand on top of left fist, palm facing down]"><p><span class="aslfont hl">{s^}*</span><span class="aslfont po">~-..</span><span class="aslfont hs">f</span></p></dd></di>
+  <di>
+    <dt class="dt">ken</dt>
+    <dd class="de" title="[thumb-fist at left shoulder, palm facing back]"><p><span class="aslfont hl">{`||}</span><span class="aslfont po">"=``.</span><span class="aslfont hs">A</span></p></dd></di>
+  <di>
+    <dt class="dt">kepeken</dt>
+    <dd class="de" title="[L hand on top of left fist, palm facing left]"><p><span class="aslfont hl">{s^}*</span><span class="aslfont po">'%</span><span class="aslfont hs">l</span></p></dd></di>
+  <di>
+    <dt class="dt">kili</dt>
+    <dd class="de" title="[thumb-fist at side of chin, palm facing left]"><p><span class="aslfont hl">(..)</span><span class="aslfont po">'%</span><span class="aslfont hs">A</span></p></dd></di>
+  <di>
+    <dt class="dt">kiwen</dt>
+    <dd class="de" title="[thumb-fist on top of left fist, palm facing down]"><p><span class="aslfont hl">{s^}*</span><span class="aslfont po">~-..</span><span class="aslfont hs">A</span></p></dd></di>
+  <di>
+    <dt class="dt">ko</dt>
+    <dd class="de" title="[bent hand on stomach, palm facing down]"><p><span class="aslfont hl">{|.|}</span><span class="aslfont po">~-..</span><span class="aslfont hs">M</span></p></dd></di>
+  <di>
+    <dt class="dt">kon</dt>
+    <dd class="de" title="[wiggling hand in front of chest, palm facing left]"><p><span class="aslfont hl">{|`}</span><span class="aslfont po">'%</span><span class="aslfont hs">5??</span></p></dd></di>
+  <di>
+    <dt class="dt">kule</dt>
+    <dd class="de" title="[F hand in front of chest, palm facing left]"><p><span class="aslfont hl">{|`}</span><span class="aslfont po">'%</span><span class="aslfont hs">f</span></p></dd></di>
+  <di>
+    <dt class="dt">kulupu</dt>
+    <dd class="de" title="[2 hand at left shoulder, palm facing down]"><p><span class="aslfont hl">{`||}</span><span class="aslfont po">~-..</span><span class="aslfont hs">2</span></p></dd></di>
+  <di>
+    <dt class="dt">kute</dt>
+    <dd class="de" title="[thumb-fist at side of forehead, palm facing left]"><p><span class="aslfont hl">(``)</span><span class="aslfont po">'%</span><span class="aslfont hs">A</span></p></dd></di>
+  <di>
+    <dt class="dt">la</dt>
+    <dd class="de" title="[bent hand in front of chest, palm facing left]"><p><span class="aslfont hl">{|`}</span><span class="aslfont po">'%</span><span class="aslfont hs">M</span></p></dd></di>
+  <di>
+    <dt class="dt">lape</dt>
+    <dd class="de" title="[flat hand at side of forehead, palm facing left]"><p><span class="aslfont hl">(``)</span><span class="aslfont po">'%</span><span class="aslfont hs">B</span></p></dd></di>
+  <di>
+    <dt class="dt">laso</dt>
+    <dd class="de" title="[F hand at left elbow, palm facing down]"><p><span class="aslfont hl">{.||}</span><span class="aslfont po">~-..</span><span class="aslfont hs">f</span></p></dd></di>
+  <di>
+    <dt class="dt">lawa</dt>
+    <dd class="de" title="[flat hand at side of forehead, palm facing forward]"><p><span class="aslfont hl">(``)</span><span class="aslfont po">"=..`</span><span class="aslfont hs">B</span></p></dd></di>
+  <di>
+    <dt class="dt">len</dt>
+    <dd class="de" title="[bent hand at left shoulder, palm facing back]"><p><span class="aslfont hl">{`||}</span><span class="aslfont po">"=``.</span><span class="aslfont hs">M</span></p></dd></di>
+  <di>
+    <dt class="dt">lete</dt>
+    <dd class="de" title="[wiggling hand at left elbow, palm facing down]"><p><span class="aslfont hl">{.||}</span><span class="aslfont po">~-..</span><span class="aslfont hs">5??</span></p></dd></di>
+  <di>
+    <dt class="dt">li</dt>
+    <dd class="de" title="[flat hand in front of chest, palm facing left]"><p><span class="aslfont hl">{|`}</span><span class="aslfont po">'%</span><span class="aslfont hs">B</span></p></dd></di>
+  <di>
+    <dt class="dt">lili</dt>
+    <dd class="de" title="[2 hand at side of chin, palm facing forward]"><p><span class="aslfont hl">(..)</span><span class="aslfont po">"=..`</span><span class="aslfont hs">2</span></p></dd></di>
+  <di>
+    <dt class="dt">linja</dt>
+    <dd class="de" title="[1 hand at side of forehead, palm facing left]"><p><span class="aslfont hl">(``)</span><span class="aslfont po">'%</span><span class="aslfont hs">1</span></p></dd></di>
+  <di>
+    <dt class="dt">lipu</dt>
+    <dd class="de" title="[flat hand on top of left fist, palm facing up]"><p><span class="aslfont hl">{s^}*</span><span class="aslfont po">~-``</span><span class="aslfont hs">B</span></p></dd></di>
+  <di>
+    <dt class="dt">loje</dt>
+    <dd class="de" title="[F hand at side of chin, palm facing left]"><p><span class="aslfont hl">(..)</span><span class="aslfont po">'%</span><span class="aslfont hs">f</span></p></dd></di>
+  <di>
+    <dt class="dt">lon</dt>
+    <dd class="de" title="[1 hand on top of left fist, palm facing down]"><p><span class="aslfont hl">{s^}*</span><span class="aslfont po">~-..</span><span class="aslfont hs">1</span></p></dd></di>
+  <di>
+    <dt class="dt">luka</dt>
+    <dd class="de" title="[flat hand in front of chest, palm facing forward]"><p><span class="aslfont hl">{|`}</span><span class="aslfont po">"=..`</span><span class="aslfont hs">B</span></p></dd></di>
+  <di>
+    <dt class="dt">lukin</dt>
+    <dd class="de" title="[2 hand in front of chest, palm facing down]"><p><span class="aslfont hl">{|`}</span><span class="aslfont po">~-..</span><span class="aslfont hs">2</span></p></dd></di>
+  <di>
+    <dt class="dt">lupa</dt>
+    <dd class="de" title="[O hand in front of chest, palm facing left]"><p><span class="aslfont hl">{|`}</span><span class="aslfont po">'%</span><span class="aslfont hs">o</span></p></dd></di>
+  <di>
+    <dt class="dt">ma</dt>
+    <dd class="de" title="[flat hand in front of chest, palm facing down (both hands)]"><p><span class="aslfont bh">}{</span><span class="aslfont hl">{|`}</span><span class="aslfont po">~-..</span><span class="aslfont hs">B</span></p></dd></di>
+  <di>
+    <dt class="dt">mama</dt>
+    <dd class="de" title="[2 hand on stomach, palm facing down]"><p><span class="aslfont hl">{|.|}</span><span class="aslfont po">~-..</span><span class="aslfont hs">2</span></p></dd></di>
+  <di>
+    <dt class="dt">mani</dt>
+    <dd class="de" title="[thumb-fist at left elbow, palm facing back]"><p><span class="aslfont hl">{.||}</span><span class="aslfont po">"=``.</span><span class="aslfont hs">A</span></p></dd></di>
+  <di>
+    <dt class="dt">meli</dt>
+    <dd class="de" title="[2 hand on stomach, palm facing back]"><p><span class="aslfont hl">{|.|}</span><span class="aslfont po">"=``.</span><span class="aslfont hs">2</span></p></dd></di>
+  <di>
+    <dt class="dt">mi</dt>
+    <dd class="de" title="[thumb-fist in front of chest, palm facing down, thumb pointing back]"><p><span class="aslfont hl">{|`}</span><span class="aslfont po">-.</span><span class="aslfont hs">A</span></p></dd></di>
+  <di>
+    <dt class="dt">mije</dt>
+    <dd class="de" title="[2 hand on top of left fist, palm facing left]"><p><span class="aslfont hl">{s^}*</span><span class="aslfont po">'%</span><span class="aslfont hs">2</span></p></dd></di>
+  <di>
+    <dt class="dt">moku</dt>
+    <dd class="de" title="[O hand at side of chin, palm facing back]"><p><span class="aslfont hl">(..)</span><span class="aslfont po">"=``.</span><span class="aslfont hs">o</span></p></dd></di>
+  <di>
+    <dt class="dt">moli</dt>
+    <dd class="de" title="[L hand at side of forehead, palm facing back]"><p><span class="aslfont hl">(``)</span><span class="aslfont po">"=``.</span><span class="aslfont hs">l</span></p></dd></di>
+  <di>
+    <dt class="dt">monsi</dt>
+    <dd class="de" title="[L hand in front of chest, palm facing forward]"><p><span class="aslfont hl">{|`}</span><span class="aslfont po">"=..`</span><span class="aslfont hs">l</span></p></dd></di>
+  <di>
+    <dt class="dt">mu</dt>
+    <dd class="de" title="[wiggling hand at side of chin, palm facing down]"><p><span class="aslfont hl">(..)</span><span class="aslfont po">~-..</span><span class="aslfont hs">5??</span></p></dd></di>
+  <di>
+    <dt class="dt">mun</dt>
+    <dd class="de" title="[O hand at side of forehead, palm facing left]"><p><span class="aslfont hl">(``)</span><span class="aslfont po">'%</span><span class="aslfont hs">o</span></p></dd></di>
+  <di>
+    <dt class="dt">musi</dt>
+    <dd class="de" title="[wiggling hand at side of forehead, palm facing left]"><p><span class="aslfont hl">(``)</span><span class="aslfont po">'%</span><span class="aslfont hs">5??</span></p></dd></di>
+  <di>
+    <dt class="dt">mute</dt>
+    <dd class="de" title="[flat hand in front of chest, palm facing forward (both hands)]"><p><span class="aslfont bh">}{</span><span class="aslfont hl">{|`}</span><span class="aslfont po">"=..`</span><span class="aslfont hs">B</span></p></dd></di>
+  <di>
+    <dt class="dt">nanpa</dt>
+    <dd class="de" title="[2 hand in front of chest, palm facing back]"><p><span class="aslfont hl">{|`}</span><span class="aslfont po">"=``.</span><span class="aslfont hs">2</span></p></dd></di>
+  <di>
+    <dt class="dt">nasa</dt>
+    <dd class="de" title="[thumb-fist at side of forehead, palm facing forward]"><p><span class="aslfont hl">(``)</span><span class="aslfont po">"=..`</span><span class="aslfont hs">A</span></p></dd></di>
+  <di>
+    <dt class="dt">nasin</dt>
+    <dd class="de" title="[flat hand in front of chest, palm facing left (both hands)]"><p><span class="aslfont bh">}{</span><span class="aslfont hl">{|`}</span><span class="aslfont po">'%</span><span class="aslfont hs">B</span></p></dd></di>
+  <di>
+    <dt class="dt">nena</dt>
+    <dd class="de" title="[bent hand on top of left fist, palm facing down]"><p><span class="aslfont hl">{s^}*</span><span class="aslfont po">~-..</span><span class="aslfont hs">M</span></p></dd></di>
+  <di>
+    <dt class="dt">ni</dt>
+    <dd class="de" title="[L hand at side of chin, palm facing back]"><p><span class="aslfont hl">(..)</span><span class="aslfont po">"=``.</span><span class="aslfont hs">l</span></p></dd></di>
+  <di>
+    <dt class="dt">nimi</dt>
+    <dd class="de" title="[nothing under left slanted forearm]"><p><span class="aslfont hl">{B_}.- </span><span class="aslfont hs"></span></p></dd></di>
+  <di>
+    <dt class="dt">noka</dt>
+    <dd class="de" title="[flat hand in front of chest, palm facing back]"><p><span class="aslfont hl">{|`}</span><span class="aslfont po">"=``.</span><span class="aslfont hs">B</span></p></dd></di>
+  <di>
+    <dt class="dt">o &#8203;</dt>
+    <dd class="de" title="[wiggling hand in front of chest, palm facing down]"><p><span class="aslfont hl">{|`}</span><span class="aslfont po">~-..</span><span class="aslfont hs">5??</span></p></dd></di>
+  <di>
+    <dt class="dt">olin</dt>
+    <dd class="de" title="[wiggling hand on stomach, palm facing back]"><p><span class="aslfont hl">{|.|}</span><span class="aslfont po">"=``.</span><span class="aslfont hs">5??</span></p></dd></di>
+  <di>
+    <dt class="dt">ona</dt>
+    <dd class="de" title="[1 hand in front of chest, index finger pointing left]"><p><span class="aslfont hl">{|`}</span><span class="aslfont po">[-.,=`,-`]</span><span class="aslfont hs">1</span></p></dd></di>
+  <di>
+    <dt class="dt">open</dt>
+    <dd class="de" title="[O hand at left shoulder, palm facing down]"><p><span class="aslfont hl">{`||}</span><span class="aslfont po">~-..</span><span class="aslfont hs">o</span></p></dd></di>
+  <di>
+    <dt class="dt">pakala</dt>
+    <dd class="de" title="[thumb-fist on top of left fist, palm facing forward]"><p><span class="aslfont hl">{s^}*</span><span class="aslfont po">"=..`</span><span class="aslfont hs">A</span></p></dd></di>
+  <di>
+    <dt class="dt">pali</dt>
+    <dd class="de" title="[thumb-fist on top of left fist, palm facing left]"><p><span class="aslfont hl">{s^}*</span><span class="aslfont po">'%</span><span class="aslfont hs">A</span></p></dd></di>
+  <di>
+    <dt class="dt">palisa</dt>
+    <dd class="de" title="[O hand on top of left fist, palm facing left]"><p><span class="aslfont hl">{s^}*</span><span class="aslfont po">'%</span><span class="aslfont hs">o</span></p></dd></di>
+  <di>
+    <dt class="dt">pan</dt>
+    <dd class="de" title="[F hand at side of chin, palm facing back]"><p><span class="aslfont hl">(..)</span><span class="aslfont po">"=``.</span><span class="aslfont hs">f</span></p></dd></di>
+  <di>
+    <dt class="dt">pana</dt>
+    <dd class="de" title="[wiggling hand in front of chest, palm facing up]"><p><span class="aslfont hl">{|`}</span><span class="aslfont po">~-``</span><span class="aslfont hs">5??</span></p></dd></di>
+  <di>
+    <dt class="dt">pi</dt>
+    <dd class="de" title="[O hand in front of chest, palm facing forward]"><p><span class="aslfont hl">{|`}</span><span class="aslfont po">"=..`</span><span class="aslfont hs">o</span></p></dd></di>
+  <di>
+    <dt class="dt">pilin</dt>
+    <dd class="de" title="[F hand on stomach, palm facing back]"><p><span class="aslfont hl">{|.|}</span><span class="aslfont po">"=``.</span><span class="aslfont hs">f</span></p></dd></di>
+  <di>
+    <dt class="dt">pimeja</dt>
+    <dd class="de" title="[F hand at left shoulder, palm facing down]"><p><span class="aslfont hl">{`||}</span><span class="aslfont po">~-..</span><span class="aslfont hs">f</span></p></dd></di>
+  <di>
+    <dt class="dt">pini</dt>
+    <dd class="de" title="[O hand at left shoulder, palm facing up]"><p><span class="aslfont hl">{`||}</span><span class="aslfont po">~-``</span><span class="aslfont hs">o</span></p></dd></di>
+  <di>
+    <dt class="dt">pipi</dt>
+    <dd class="de" title="[1 hand at left elbow, palm facing back]"><p><span class="aslfont hl">{.||}</span><span class="aslfont po">"=``.</span><span class="aslfont hs">1</span></p></dd></di>
+  <di>
+    <dt class="dt">poka</dt>
+    <dd class="de" title="[L hand at left elbow, palm facing back]"><p><span class="aslfont hl">{.||}</span><span class="aslfont po">"=``.</span><span class="aslfont hs">l</span></p></dd></di>
+  <di>
+    <dt class="dt">poki</dt>
+    <dd class="de" title="[O hand in front of chest, palm facing down]"><p><span class="aslfont hl">{|`}</span><span class="aslfont po">~-..</span><span class="aslfont hs">o</span></p></dd></di>
+  <di>
+    <dt class="dt">pona</dt>
+    <dd class="de" title="[thumb-fist in front of chest, palm facing left, thumb pointing up]"><p><span class="aslfont hl">{|`}</span><span class="aslfont po">`%</span><span class="aslfont hs">A</span></p></dd></di>
+  <di>
+    <dt class="dt">pu</dt>
+    <dd class="de" title="[wiggling hand on top of left fist, palm facing up]"><p><span class="aslfont hl">{s^}*</span><span class="aslfont po">~-``</span><span class="aslfont hs">5??</span></p></dd></di>
+  <di>
+    <dt class="dt">sama</dt>
+    <dd class="de" title="[thumb-fist in front of chest, palm facing down (both hands)]"><p><span class="aslfont bh">}{</span><span class="aslfont hl">{|`}</span><span class="aslfont po">~-..</span><span class="aslfont hs">A</span></p></dd></di>
+  <di>
+    <dt class="dt">seli</dt>
+    <dd class="de" title="[wiggling hand at left shoulder, palm facing down]"><p><span class="aslfont hl">{`||}</span><span class="aslfont po">~-..</span><span class="aslfont hs">5??</span></p></dd></di>
+  <di>
+    <dt class="dt">selo</dt>
+    <dd class="de" title="[F hand at left elbow, palm facing back]"><p><span class="aslfont hl">{.||}</span><span class="aslfont po">"=``.</span><span class="aslfont hs">f</span></p></dd></di>
+  <di>
+    <dt class="dt">seme</dt>
+    <dd class="de" title="[flat hand in front of chest, palm facing up]"><p><span class="aslfont hl">{|`}</span><span class="aslfont po">~-``</span><span class="aslfont hs">B</span></p></dd></di>
+  <di>
+    <dt class="dt">sewi</dt>
+    <dd class="de" title="[1 hand in front of chest, palm facing left, index finger pointing up]"><p><span class="aslfont hl">{|`}</span><span class="aslfont po">.'</span><span class="aslfont hs">1</span></p></dd></di>
+  <di>
+    <dt class="dt">sijelo</dt>
+    <dd class="de" title="[flat hand on stomach, palm facing back]"><p><span class="aslfont hl">{|.|}</span><span class="aslfont po">"=``.</span><span class="aslfont hs">B</span></p></dd></di>
+  <di>
+    <dt class="dt">sike</dt>
+    <dd class="de" title="[O hand on top of left fist, palm facing down]"><p><span class="aslfont hl">{s^}*</span><span class="aslfont po">~-..</span><span class="aslfont hs">o</span></p></dd></di>
+  <di>
+    <dt class="dt">sin</dt>
+    <dd class="de" title="[wiggling hand on top of left fist, palm facing left]"><p><span class="aslfont hl">{s^}*</span><span class="aslfont po">'%</span><span class="aslfont hs">5??</span></p></dd></di>
+  <di>
+    <dt class="dt">sina</dt>
+    <dd class="de" title="[1 hand in front of chest, index finger pointing forward]"><p><span class="aslfont hl">{|`}</span><span class="aslfont po">[.~,`%,~`]</span><span class="aslfont hs">1</span></p></dd></di>
+  <di>
+    <dt class="dt">sinpin</dt>
+    <dd class="de" title="[L hand in front of chest, palm facing back (both hands)]"><p><span class="aslfont bh">}{</span><span class="aslfont hl">{|`}</span><span class="aslfont po">"=``.</span><span class="aslfont hs">l</span></p></dd></di>
+  <di>
+    <dt class="dt">sitelen</dt>
+    <dd class="de" title="[F hand in front of chest, palm facing left (both hands)]"><p><span class="aslfont bh">}{</span><span class="aslfont hl">{|`}</span><span class="aslfont po">'%</span><span class="aslfont hs">f</span></p></dd></di>
+  <di>
+    <dt class="dt">sona</dt>
+    <dd class="de" title="[bent hand at side of forehead, palm facing left]"><p><span class="aslfont hl">(``)</span><span class="aslfont po">'%</span><span class="aslfont hs">M</span></p></dd></di>
+  <di>
+    <dt class="dt">soweli</dt>
+    <dd class="de" title="[flat hand at left elbow, palm facing down]"><p><span class="aslfont hl">{.||}</span><span class="aslfont po">~-..</span><span class="aslfont hs">B</span></p></dd></di>
+  <di>
+    <dt class="dt">suli</dt>
+    <dd class="de" title="[2 hand at side of forehead, palm facing forward]"><p><span class="aslfont hl">(``)</span><span class="aslfont po">"=..`</span><span class="aslfont hs">2</span></p></dd></di>
+  <di>
+    <dt class="dt">suno</dt>
+    <dd class="de" title="[bent hand at side of forehead, palm facing forward]"><p><span class="aslfont hl">(``)</span><span class="aslfont po">"=..`</span><span class="aslfont hs">M</span></p></dd></di>
+  <di>
+    <dt class="dt">supa</dt>
+    <dd class="de" title="[flat hand in front of chest, palm facing up (both hands)]"><p><span class="aslfont bh">}{</span><span class="aslfont hl">{|`}</span><span class="aslfont po">~-``</span><span class="aslfont hs">B</span></p></dd></di>
+  <di>
+    <dt class="dt">suwi</dt>
+    <dd class="de" title="[2 hand at side of chin, palm facing left]"><p><span class="aslfont hl">(..)</span><span class="aslfont po">'%</span><span class="aslfont hs">2</span></p></dd></di>
+  <di>
+    <dt class="dt">tan</dt>
+    <dd class="de" title="[bent hand at left elbow, palm facing back]"><p><span class="aslfont hl">{.||}</span><span class="aslfont po">"=``.</span><span class="aslfont hs">M</span></p></dd></di>
+  <di>
+    <dt class="dt">taso</dt>
+    <dd class="de" title="[L hand in front of chest, palm facing down (both hands)]"><p><span class="aslfont bh">}{</span><span class="aslfont hl">{|`}</span><span class="aslfont po">~-..</span><span class="aslfont hs">l</span></p></dd></di>
+  <di>
+    <dt class="dt">tawa</dt>
+    <dd class="de" title="[bent hand in front of chest, palm facing forward]"><p><span class="aslfont hl">{|`}</span><span class="aslfont po">"=..`</span><span class="aslfont hs">M</span></p></dd></di>
+  <di>
+    <dt class="dt">telo</dt>
+    <dd class="de" title="[wiggling hand in front of chest, palm facing down (both hands)]"><p><span class="aslfont bh">}{</span><span class="aslfont hl">{|`}</span><span class="aslfont po">~-..</span><span class="aslfont hs">5??</span></p></dd></di>
+  <di>
+    <dt class="dt">tenpo</dt>
+    <dd class="de" title="[F hand on top of left fist, palm facing left]"><p><span class="aslfont hl">{s^}*</span><span class="aslfont po">'%</span><span class="aslfont hs">f</span></p></dd></di>
+  <di>
+    <dt class="dt">toki</dt>
+    <dd class="de" title="[bent hand at side of chin, palm facing left]"><p><span class="aslfont hl">(..)</span><span class="aslfont po">'%</span><span class="aslfont hs">M</span></p></dd></di>
+  <di>
+    <dt class="dt">tomo</dt>
+    <dd class="de" title="[bent hand in front of chest, palm facing left (both hands)]"><p><span class="aslfont bh">}{</span><span class="aslfont hl">{|`}</span><span class="aslfont po">'%</span><span class="aslfont hs">M</span></p></dd></di>
+  <di>
+    <dt class="dt">tu</dt>
+    <dd class="de" title="[2 hand in front of chest, palm facing forward]"><p><span class="aslfont hl">{|`}</span><span class="aslfont po">"=..`</span><span class="aslfont hs">2</span></p></dd></di>
+  <di>
+    <dt class="dt">unpa</dt>
+    <dd class="de" title="[2 hand on top of left fist, palm facing down]"><p><span class="aslfont hl">{s^}*</span><span class="aslfont po">~-..</span><span class="aslfont hs">2</span></p></dd></di>
+  <di>
+    <dt class="dt">uta</dt>
+    <dd class="de" title="[1 hand at side of chin, palm facing back]"><p><span class="aslfont hl">(..)</span><span class="aslfont po">"=``.</span><span class="aslfont hs">1</span></p></dd></di>
+  <di>
+    <dt class="dt">utala</dt>
+    <dd class="de" title="[thumb-fist at left shoulder, palm facing forward]"><p><span class="aslfont hl">{`||}</span><span class="aslfont po">"=..`</span><span class="aslfont hs">A</span></p></dd></di>
+  <di>
+    <dt class="dt">walo</dt>
+    <dd class="de" title="[F hand at side of forehead, palm facing down]"><p><span class="aslfont hl">(``)</span><span class="aslfont po">~-..</span><span class="aslfont hs">f</span></p></dd></di>
+  <di>
+    <dt class="dt">wan</dt>
+    <dd class="de" title="[1 hand in front of chest, palm facing forward, index finger pointing up]"><p><span class="aslfont hl">{|`}</span><span class="aslfont po">."</span><span class="aslfont hs">1</span></p></dd></di>
+  <di>
+    <dt class="dt">waso</dt>
+    <dd class="de" title="[O hand at side of chin, palm facing forward]"><p><span class="aslfont hl">(..)</span><span class="aslfont po">"=..`</span><span class="aslfont hs">o</span></p></dd></di>
+  <di>
+    <dt class="dt">wawa</dt>
+    <dd class="de" title="[thumb-fist on stomach, palm facing back]"><p><span class="aslfont hl">{|.|}</span><span class="aslfont po">"=``.</span><span class="aslfont hs">A</span></p></dd></di>
+  <di>
+    <dt class="dt">weka</dt>
+    <dd class="de" title="[O hand at left elbow, palm facing down]"><p><span class="aslfont hl">{.||}</span><span class="aslfont po">~-..</span><span class="aslfont hs">o</span></p></dd></di>
+  <di>
+    <dt class="dt">wile</dt>
+    <dd class="de" title="[O hand on stomach, palm facing up]"><p><span class="aslfont hl">{|.|}</span><span class="aslfont po">~-``</span><span class="aslfont hs">o</span></p></dd></di></dl>
+<dl class="dict spell">
+  <di>
+    <dt class="dt">[_ale][_awen]</dt>
+    <dd class="de" title="[thumb-fistunder left slanted forearm, palm facing back]"><p><span class="aslfont hl">{B_}.- </span><span class="aslfont po">"=``.</span><span class="aslfont hs">A</span></p></dd></di>
+  <di>
+    <dt class="dt">[_en][_esun]</dt>
+    <dd class="de" title="[flat handunder left slanted forearm, palm facing back]"><p><span class="aslfont hl">{B_}.- </span><span class="aslfont po">"=``.</span><span class="aslfont hs">B</span></p></dd></di>
+  <di>
+    <dt class="dt">[_ike][_jo]</dt>
+    <dd class="de" title="[1 handunder left slanted forearm, palm facing down]"><p><span class="aslfont hl">{B_}.- </span><span class="aslfont po">~-..</span><span class="aslfont hs">1</span></p></dd></di>
+  <di>
+    <dt class="dt">[_kasi][_kili]</dt>
+    <dd class="de" title="[bent handunder left slanted forearm, palm facing down]"><p><span class="aslfont hl">{B_}.- </span><span class="aslfont po">~-..</span><span class="aslfont hs">M</span></p></dd></di>
+  <di>
+    <dt class="dt">[_luka][_len]</dt>
+    <dd class="de" title="[L handunder left slanted forearm, palm facing back]"><p><span class="aslfont hl">{B_}.- </span><span class="aslfont po">"=``.</span><span class="aslfont hs">l</span></p></dd></di>
+  <di>
+    <dt class="dt">[_meli][_mu]</dt>
+    <dd class="de" title="[wiggling handunder left slanted forearm, palm facing back]"><p><span class="aslfont hl">{B_}.- </span><span class="aslfont po">"=``.</span><span class="aslfont hs">5??</span></p></dd></di>
+  <di>
+    <dt class="dt">[_nena][_nasa]</dt>
+    <dd class="de" title="[wiggling handunder left slanted forearm, palm facing down]"><p><span class="aslfont hl">{B_}.- </span><span class="aslfont po">~-..</span><span class="aslfont hs">5??</span></p></dd></di>
+  <di>
+    <dt class="dt">[_ona][_olin]</dt>
+    <dd class="de" title="[O handunder left slanted forearm, palm facing down]"><p><span class="aslfont hl">{B_}.- </span><span class="aslfont po">~-..</span><span class="aslfont hs">o</span></p></dd></di>
+  <di>
+    <dt class="dt">[_pona][_pakala]</dt>
+    <dd class="de" title="[F handunder left slanted forearm, palm facing down]"><p><span class="aslfont hl">{B_}.- </span><span class="aslfont po">~-..</span><span class="aslfont hs">f</span></p></dd></di>
+  <di>
+    <dt class="dt">[_sama][_suwi]</dt>
+    <dd class="de" title="[thumb-fistunder left slanted forearm, palm facing down]"><p><span class="aslfont hl">{B_}.- </span><span class="aslfont po">~-..</span><span class="aslfont hs">A</span></p></dd></di>
+  <di>
+    <dt class="dt">[_tomo][_toki]</dt>
+    <dd class="de" title="[flat handunder left slanted forearm, palm facing down]"><p><span class="aslfont hl">{B_}.- </span><span class="aslfont po">~-..</span><span class="aslfont hs">B</span></p></dd></di>
+  <di>
+    <dt class="dt">[_unpa][_wile]</dt>
+    <dd class="de" title="[2 handunder left slanted forearm, palm facing back]"><p><span class="aslfont hl">{B_}.- </span><span class="aslfont po">"=``.</span><span class="aslfont hs">2</span></p></dd></di></dl>

@@ -10,7 +10,7 @@
 }
 .aslfont {font-family: aslfont; font-size: 3em;}
 #filter {background-color: lightgray;}
-#filter div p {padding:0em; margin:0em;}
+#tools, #filter, #filter div p {padding:0em; margin:0em;}
 #picker, #filter>*>* {font-family: aslfont; font-size:1.5em;}
 .dt{
   font-family: sitelenpona; font-variant-ligatures: common-ligatures; font-feature-settings: "liga", "clig";
@@ -88,10 +88,10 @@ function spmatch(kwpair,t){
   }else{return false;}
 }
 function escapeRegExp(string) {
-  return string.replace(/[.*+?^=!:${}()|[\]\/\\]/g, '\\$&'); // $&�̓}�b�`���������������S�̂��Ӗ����܂�
+  return string.replace(/[.*+?^=!:${}()|[\]\/\\]/g, '\\$&');
 }
 </script>
-<p><input type="button" id="picker" value="GZF" class="aslfont"/></p>
+<p id="tools"><input type="button" value="GZF" id="picker" class="aslfont"/></p>
 <form id="filter">
   <div id="opt"><p>
     <input type="checkbox" name="hs" id="hsB"/><label for="hsB">B</label>

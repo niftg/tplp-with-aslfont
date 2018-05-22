@@ -8,9 +8,10 @@
     font-family: sitelenpona;
     src: url(https://niftg.github.io/linja-pona/linja%20pona%203%20OTF.otf);
 }
-.aslfont, #filter>*>* {font-family: aslfont; font-size: 3em;}
+.aslfont {font-family: aslfont; font-size: 3em;}
 #filter {background-color: lightgray;}
 #filter div p {padding:0em; margin:0em;}
+#picker, #filter>*>* {font-family: aslfont; font-size:1.5em;}
 .dt{
   font-family: sitelenpona; font-variant-ligatures: common-ligatures; font-feature-settings: "liga", "clig";
   font-size: 2em; line-height: 1.25em;
@@ -33,15 +34,15 @@ dl.dict.spell dd {height: 3em;}
 window.addEventListener("load",init,false);
 function init() {
   document.querySelector("#picker").addEventListener("click",toggle,false);
-  document.querySelector("#opt").style.display = "none";
-  
+  document.querySelector("#filter").style.display = "none";
+
   var cbx = document.querySelectorAll('#filter input[type="checkbox"]');
   for (var i of cbx) {
     i.addEventListener("click",filter,false)
   }
 }
 function toggle(){
-  var o = document.querySelector("#opt");
+  var o = document.querySelector("#filter");
   if(o.style.display=="none"){o.style.display="block";}else{o.style.display="none";}
 }
 function filter(){
@@ -82,7 +83,7 @@ function spmatch(kwpair,t){
   }else{return false;}
 }
 function escapeRegExp(string) {
-  return string.replace(/[.*+?^=!:${}()|[\]\/\\]/g, '\\$&'); // $&‚Íƒ}ƒbƒ`‚µ‚½•”•ª•¶Žš—ñ‘S‘Ì‚ðˆÓ–¡‚µ‚Ü‚·
+  return string.replace(/[.*+?^=!:${}()|[\]\/\\]/g, '\\$&'); // $&ï¿½Íƒ}ï¿½bï¿½`ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Sï¿½Ì‚ï¿½ï¿½Ó–ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½
 }
 </script>
 <p><input type="button" id="picker" value="GZF" class="aslfont"/></p>

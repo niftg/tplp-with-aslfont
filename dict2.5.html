@@ -64,9 +64,9 @@ function filter(){
       var span = dd.querySelector("span."+j[0]);
       var regexpkw = new RegExp(escapeRegExp(j[1]));
       if(
-        (span&&(spmatch(j,span.textContent)||span.textContent.match(regexpkw)))
+        ((span!=null)&&(spmatch(j,span.textContent)||span.textContent.match(regexpkw)))
         ||
-        (!span&&spmatch(j))
+        ((span==null)&&spmatch(j,null))
       ){
         nms_tester[nms.indexOf(j[0])] = true;
       }
@@ -79,8 +79,8 @@ function filter(){
   }
 }
 function spmatch(kwpair,t){
-  if(t==null&&kwpair[0]=="bh"&&kwpair[1]==" "){
-    return true;
+  if(t==null){
+    return kwpair[0]=="bh"&&kwpair[1]==" ";
   }else if(kwpair[0]=="hs"&&kwpair[1]==" "){
     return t.match(/^$/);
   }else if(kwpair[0]=="po"&&kwpair[1]=='[({."})]'){

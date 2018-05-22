@@ -63,10 +63,13 @@ function filter(){
     for (var j of kws){
       var span = dd.querySelector("span."+j[0]);
       var regexpkw = new RegExp(escapeRegExp(j[1]));
-      if(span){if(spmatch(j,span.textContent)||span.textContent.match(regexpkw)){
+      if(
+        (span&&(spmatch(j,span.textContent)||span.textContent.match(regexpkw)))
+        ||
+        (!span&&spmatch(j))
+      ){
         nms_tester[nms.indexOf(j[0])] = true;
-        console.log(j);
-      }}
+      }
     }
     var matched = true;
     for (var k of nms_tester){
@@ -76,7 +79,9 @@ function filter(){
   }
 }
 function spmatch(kwpair,t){
-  if(kwpair[0]=="hs"&&kwpair[1]==" "){
+  if(t==null&&kwpair[0]=="bh"&&kwpair[1]==" "){
+    return true;
+  }else if(kwpair[0]=="hs"&&kwpair[1]==" "){
     return t.match(/^$/);
   }else if(kwpair[0]=="po"&&kwpair[1]=='[({."})]'){
     return !(t.match(/\'%/) || t.match(/[\.`]{2}/));
@@ -118,7 +123,7 @@ function escapeRegExp(string) {
     <input type="checkbox" name="po" id="pob"/><label for="pob">"=``.</label>
     <input type="checkbox" name="po" id="po_"/><label for="po_">[({."})]</label>
   </p>
-  <p><input type="checkbox" name="bh" id="bh1"/><label for="bh1">}{</label></p></div>
+  <p><input type="checkbox" name="bh" id="bh1"/><label for="bh1">}{</label><input type="checkbox" name="bh" id="bh_"/><label for="bh_"> </label></p></div>
 </form>
 <dl class="dict">
   <di>

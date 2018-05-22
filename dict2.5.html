@@ -10,8 +10,11 @@
 }
 .aslfont {font-family: aslfont; font-size: 3em;}
 #filter {background-color: lightgray;}
-#tools, #filter, #filter div p {padding:0em; margin:0em;}
-#picker, #filter>*>* {font-family: aslfont; font-size:1.5em;}
+#tools, #filter {padding:0em; margin:0em;}
+#filter div ul {padding:0em 0em 0.25em; margin:0em;}
+#picker, #filter>*>* {font-family: aslfont; font-size:2em;}
+#filter ul + ul {border-top-style: dashed; border-width: thin;}
+#filter li {display:inline-flex; flex-flow: row nowrap;}
 .dt{
   font-family: sitelenpona; font-variant-ligatures: common-ligatures; font-feature-settings: "liga", "clig";
   font-size: 2em; line-height: 1.25em;
@@ -93,37 +96,40 @@ function escapeRegExp(string) {
 </script>
 <p id="tools"><input type="button" value="GZF" id="picker" class="aslfont"/></p>
 <form id="filter">
-  <div id="opt"><p>
-    <input type="checkbox" name="hs" id="hsB"/><label for="hsB">B</label>
-    <input type="checkbox" name="hs" id="hsa"/><label for="hsa">A</label>
-    <input type="checkbox" name="hs" id="hsM"/><label for="hsM">M</label>
-    <input type="checkbox" name="hs" id="hs5"/><label for="hs5">5??</label>
-    <input type="checkbox" name="hs" id="hs1"/><label for="hs1">1</label>
-    <input type="checkbox" name="hs" id="hs2"/><label for="hs2">2</label>
-    <input type="checkbox" name="hs" id="hso"/><label for="hso">o</label>
-    <input type="checkbox" name="hs" id="hsl"/><label for="hsl">l</label>
-    <input type="checkbox" name="hs" id="hsf"/><label for="hsf">f</label>
-    <input type="checkbox" name="hs" id="hs_"/><label for="hs_"> </label>
-  </p>
-  <p>
-    <input type="checkbox" name="hl" id="hlct"/><label for="hlct">{|`}</label>
-    <input type="checkbox" name="hl" id="hlfh"/><label for="hlfh">(``)</label>
-    <input type="checkbox" name="hl" id="hlcn"/><label for="hlcn">(..)</label>
-    <input type="checkbox" name="hl" id="hlsh"/><label for="hlsh">{`||}</label>
-    <input type="checkbox" name="hl" id="hlel"/><label for="hlel">{.||}</label>
-    <input type="checkbox" name="hl" id="hlft"/><label for="hlft">{s^}*</label>
-    <input type="checkbox" name="hl" id="hlst"/><label for="hlst">{|.|}</label>
-    <input type="checkbox" name="hl" id="hlsa"/><label for="hlsa">{B_}.- </label>
-  </p>
-  <p>
-    <input type="checkbox" name="po" id="pol"/><label for="pol">'%</label>
-    <input type="checkbox" name="po" id="pou"/><label for="pou">~-``</label>
-    <input type="checkbox" name="po" id="pod"/><label for="pod">~-..</label>
-    <input type="checkbox" name="po" id="pof"/><label for="pof">"=..`</label>
-    <input type="checkbox" name="po" id="pob"/><label for="pob">"=``.</label>
-    <input type="checkbox" name="po" id="po_"/><label for="po_">[({."})]</label>
-  </p>
-  <p><input type="checkbox" name="bh" id="bh1"/><label for="bh1">}{</label><input type="checkbox" name="bh" id="bh_"/><label for="bh_"> </label></p></div>
+  <div id="opt"><ul>
+    <li><input type="checkbox" name="hs" id="hsB"/><label for="hsB">B</label></li>
+    <li><input type="checkbox" name="hs" id="hsa"/><label for="hsa">A</label></li>
+    <li><input type="checkbox" name="hs" id="hsM"/><label for="hsM">M</label></li>
+    <li><input type="checkbox" name="hs" id="hs5"/><label for="hs5">5??</label></li>
+    <li><input type="checkbox" name="hs" id="hs1"/><label for="hs1">1</label></li>
+    <li><input type="checkbox" name="hs" id="hs2"/><label for="hs2">2</label></li>
+    <li><input type="checkbox" name="hs" id="hso"/><label for="hso">o</label></li>
+    <li><input type="checkbox" name="hs" id="hsl"/><label for="hsl">l</label></li>
+    <li><input type="checkbox" name="hs" id="hsf"/><label for="hsf">f</label></li>
+    <li><input type="checkbox" name="hs" id="hs_"/><label for="hs_"> </label></li>
+  </ul>
+  <ul>
+    <li><input type="checkbox" name="hl" id="hlct"/><label for="hlct">{|`}</label></li>
+    <li><input type="checkbox" name="hl" id="hlfh"/><label for="hlfh">(``)</label></li>
+    <li><input type="checkbox" name="hl" id="hlcn"/><label for="hlcn">(..)</label></li>
+    <li><input type="checkbox" name="hl" id="hlsh"/><label for="hlsh">{`||}</label></li>
+    <li><input type="checkbox" name="hl" id="hlel"/><label for="hlel">{.||}</label></li>
+    <li><input type="checkbox" name="hl" id="hlft"/><label for="hlft">{s^}*</label></li>
+    <li><input type="checkbox" name="hl" id="hlst"/><label for="hlst">{|.|}</label></li>
+    <li><input type="checkbox" name="hl" id="hlsa"/><label for="hlsa">{B_}.- </label></li>
+  </ul>
+  <ul>
+    <li><input type="checkbox" name="po" id="pol"/><label for="pol">'%</label></li>
+    <li><input type="checkbox" name="po" id="pou"/><label for="pou">~-``</label></li>
+    <li><input type="checkbox" name="po" id="pod"/><label for="pod">~-..</label></li>
+    <li><input type="checkbox" name="po" id="pof"/><label for="pof">"=..`</label></li>
+    <li><input type="checkbox" name="po" id="pob"/><label for="pob">"=``.</label></li>
+    <li><input type="checkbox" name="po" id="po_"/><label for="po_">[({."})]</label></li>
+  </ul>
+  <ul>
+    <li><input type="checkbox" name="bh" id="bh1"/><label for="bh1">}{</label></li>
+    <li><input type="checkbox" name="bh" id="bh_"/><label for="bh_"> </label></li>
+  </ul></div>
 </form>
 <dl class="dict">
   <di>
